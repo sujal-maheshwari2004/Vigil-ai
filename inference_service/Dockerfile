@@ -10,6 +10,11 @@ COPY pyproject.toml .
 
 RUN uv sync --no-dev --python /usr/local/bin/python3
 
+ENV HF_HOME=/models/huggingface
+ENV SENTENCE_TRANSFORMERS_HOME=/models/sentence_transformers
+
+RUN uv run --python /usr/local/bin/python3 python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
+
 COPY main.py .
 COPY models.py .
 
