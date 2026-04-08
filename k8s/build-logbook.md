@@ -940,3 +940,69 @@ The Kubernetes manifests were extended so the anomaly and trainer services are n
 ### Note
 
 Ingress was intentionally left unchanged because only the gateway needs public routing for the current architecture.
+
+### Runtime Verification
+
+The updated manifests were applied successfully:
+
+- `anomaly-artifacts-pvc` was created and bound
+- `anomaly-detector` Deployment became healthy
+- `anomaly-trainer` Deployment became healthy
+- Services were created for both
+- HPAs were created for both
+
+### Commands Used
+
+```powershell
+kubectl apply -f .\k8s\deployment.yaml
+kubectl apply -f .\k8s\service.yaml
+kubectl apply -f .\k8s\hpa.yaml
+kubectl get pvc
+kubectl get deployments
+kubectl get pods
+kubectl get svc
+kubectl get hpa
+```
+
+### Issue Observed
+
+During the rollout, `inference-service` fell back into the old startup problem:
+
+- startup probe failed
+- container was not listening on `8001` quickly enough
+- pod restarted before becoming ready
+
+### Commands Used to Investigate
+
+```powershell
+kubectl describe pod inference-service-9fb95cc5-9kpvs
+kubectl logs inference-service-9fb95cc5-9kpvs
+```
+
+### Key Observation
+
+The logs again showed Hugging Face model loading during startup, which confirmed the familiar cold-start issue on Kubernetes.
+
+### Fix
+
+The inference image was rebuilt into Minikube and the Deployment was restarted. After that, the updated pods became healthy.
+
+### Final Runtime State
+
+The cluster stabilized with:
+
+- `gateway` healthy
+- `inference-service` healthy
+- `anomaly-detector` healthy
+- `anomaly-trainer` healthy
+- HPA metrics showing real CPU values for all relevant services
+
+### Result
+
+The Kubernetes layer now includes:
+
+- application services
+- anomaly detection services
+- training/MLOps services
+- shared artifact storage
+- autoscaling across the expanded platform
