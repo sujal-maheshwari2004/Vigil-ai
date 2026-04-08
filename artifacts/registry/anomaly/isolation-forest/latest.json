@@ -1,0 +1,7 @@
+{
+  "model_name": "isolation-forest",
+  "model_version": "20260408T101404Z",
+  "model_path": "/artifacts/models/anomaly/isolation-forest/20260408T101404Z/model.joblib",
+  "manifest_path": "/artifacts/models/anomaly/isolation-forest/20260408T101404Z/manifest.json",
+  "updated_at": "2026-04-08T10:14:04.762103+00:00"
+}

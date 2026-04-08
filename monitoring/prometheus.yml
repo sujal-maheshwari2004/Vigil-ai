@@ -19,3 +19,15 @@ scrape_configs:
     static_configs:
       - targets:
           - inference_service:8001
+
+  - job_name: anomaly_detector
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - anomaly_detector:8002
+
+  - job_name: anomaly_trainer
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - anomaly_trainer:8003

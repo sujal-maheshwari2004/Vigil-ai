@@ -658,3 +658,162 @@ Day 3 was completed successfully because:
 - `monitoring/grafana/provisioning/datasources/prometheus.yml`
 - `monitoring/grafana/provisioning/dashboards/dashboards.yml`
 - `monitoring/grafana/dashboards/grafana-dashboard.json`
+
+## Day 4: Anomaly Detection and MLOps Foundation
+
+### Goal
+
+Begin Day 4 by separating training concerns from inference and introducing a first MLOps-style artifact layer for dataset versioning.
+
+### Why the Scope Shifted
+
+The initial anomaly detector implementation trained the Isolation Forest directly inside the serving process. That was functionally useful, but it coupled:
+
+- training
+- artifact state
+- scoring
+
+into one service.
+
+The design was updated so the project can grow toward:
+
+- data versioning
+- model versioning
+- retraining workflows
+- experiment tracking
+
+without tying all MLOps behavior to the online inference API.
+
+## First MLOps Task Completed
+
+### Changes Made
+
+A new `anomaly_trainer` service was added to collect feature datasets from Prometheus and write versioned dataset artifacts to disk.
+
+### Files Created
+
+- `anomaly_trainer/pyproject.toml`
+- `anomaly_trainer/README.md`
+- `anomaly_trainer/models.py`
+- `anomaly_trainer/main.py`
+- `anomaly_trainer/Dockerfile`
+- `artifacts/README.md`
+- `artifacts/datasets/.gitkeep`
+- `artifacts/models/.gitkeep`
+- `artifacts/registry/.gitkeep`
+
+### Files Updated
+
+- `pyproject.toml`
+- `docker-compose.yml`
+- `monitoring/prometheus.yml`
+
+### What the Trainer Does
+
+The trainer service:
+
+- reads historical metrics from Prometheus
+- aligns feature samples across time
+- builds a structured dataset
+- writes versioned dataset snapshots as JSON and CSV
+- writes a dataset manifest with metadata
+- updates a lightweight `latest` pointer for the newest dataset version
+
+### Dataset Features Captured
+
+The current dataset snapshot includes:
+
+- `latency_p95_ms`
+- `error_rate_pct`
+- `requests_per_second`
+- `cpu_pct`
+- `memory_mb`
+
+### Artifact Layout Introduced
+
+Artifacts now have a dedicated home in the repo:
+
+- `artifacts/datasets/`
+- `artifacts/models/`
+- `artifacts/registry/`
+
+This sets up a clean place for future:
+
+- model artifacts
+- registry metadata
+- retraining history
+
+## Compose and Observability Wiring
+
+### Changes Made
+
+The trainer service was added to Docker Compose and Prometheus scraping configuration.
+
+### Why
+
+This ensures the trainer is:
+
+- runnable as its own service
+- independently health-checked
+- visible in the monitoring stack
+
+## Verification Performed
+
+### Checks
+
+- Python syntax compilation passed for the new trainer files
+- `docker compose config --services` confirmed the new service was wired correctly
+
+### Result
+
+The repo is ready for local runtime verification of the trainer service.
+
+## Next MLOps Task Completed: Model Versioning
+
+### Changes Made
+
+Model training and versioning were added on top of the dataset snapshot layer.
+
+### Files Updated
+
+- `anomaly_trainer/pyproject.toml`
+- `anomaly_trainer/models.py`
+- `anomaly_trainer/main.py`
+- `anomaly_detector/pyproject.toml`
+- `anomaly_detector/models.py`
+- `anomaly_detector/main.py`
+- `docker-compose.yml`
+
+### What Changed Architecturally
+
+The detector no longer needs to train an Isolation Forest inside the serving process.
+
+Instead:
+
+- `anomaly_trainer` trains a model from a captured dataset artifact
+- the trained model is saved as a versioned artifact
+- a registry-style `latest` pointer is updated
+- `anomaly_detector` loads the currently promoted model from artifact storage and uses it for scoring
+
+### Model Artifact Behavior
+
+The trainer now writes:
+
+- versioned model artifact files under `artifacts/models/`
+- model metadata manifests
+- lightweight registry pointers under `artifacts/registry/`
+
+### Detector Behavior
+
+The detector was refactored so scoring depends on the artifact registry instead of in-memory training state. This makes the serving path more consistent with a real MLOps deployment model.
+
+### Verification Performed
+
+### Checks
+
+- Python syntax compilation passed for updated trainer and detector files
+- `docker compose config --services` confirmed the Compose graph remained valid
+
+### Result
+
+The repo is ready for runtime verification of versioned model training and registry-backed anomaly scoring.

@@ -26,6 +26,51 @@ services:
     networks:
       - vigil-network
 
+  anomaly_detector:
+    build:
+      context: ./anomaly_detector
+    ports:
+      - "8002:8002"
+    environment:
+      - PROMETHEUS_URL=http://prometheus:9090
+      - ANOMALY_THRESHOLD=0.8
+      - ARTIFACTS_DIR=/artifacts
+    volumes:
+      - ./artifacts:/artifacts
+    depends_on:
+      prometheus:
+        condition: service_started
+    networks:
+      - vigil-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+
+  anomaly_trainer:
+    build:
+      context: ./anomaly_trainer
+    ports:
+      - "8003:8003"
+    environment:
+      - PROMETHEUS_URL=http://prometheus:9090
+      - ARTIFACTS_DIR=/artifacts
+    volumes:
+      - ./artifacts:/artifacts
+    depends_on:
+      prometheus:
+        condition: service_started
+    networks:
+      - vigil-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+
   prometheus:
     image: prom/prometheus:v3.5.0
     ports:
@@ -53,6 +98,8 @@ services:
       - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
     depends_on:
       - prometheus
+      - anomaly_detector
+      - anomaly_trainer
     networks:
       - vigil-network
 

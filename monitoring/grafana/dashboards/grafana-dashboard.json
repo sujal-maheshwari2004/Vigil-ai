@@ -277,7 +277,7 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 24,
+        "w": 18,
         "x": 0,
         "y": 9
       },
@@ -310,6 +310,75 @@
       ],
       "title": "Requests Per Second",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0.5
+              },
+              {
+                "color": "red",
+                "value": 0.8
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 18,
+        "y": 9
+      },
+      "id": 5,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "vigil_anomaly_probability",
+          "legendFormat": "Anomaly Probability",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Anomaly Probability",
+      "type": "gauge"
     }
   ],
   "refresh": "5s",
@@ -317,7 +386,8 @@
   "style": "dark",
   "tags": [
     "vigil-ai",
-    "day-3"
+    "day-3",
+    "day-4"
   ],
   "templating": {
     "list": []
@@ -330,6 +400,6 @@
   "timezone": "browser",
   "title": "Vigil AI Overview",
   "uid": "vigil-ai-overview",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

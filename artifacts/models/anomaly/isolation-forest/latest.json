@@ -1,0 +1,5 @@
+{
+  "model_name": "isolation-forest",
+  "model_version": "20260408T101404Z",
+  "manifest_path": "/artifacts/models/anomaly/isolation-forest/20260408T101404Z/manifest.json"
+}
