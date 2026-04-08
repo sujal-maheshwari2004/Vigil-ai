@@ -2,10 +2,13 @@ import os
 from fastapi import FastAPI, HTTPException
 from models import QueryRequest, QueryResponse
 import httpx
+from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI(title="Vigil-AI Gateway", version="1.0.0")
 
 INFERENCE_URL = os.getenv("INFERENCE_URL", "http://localhost:8001")
+
+Instrumentator().instrument(app).expose(app)
 
 
 @app.get("/health")

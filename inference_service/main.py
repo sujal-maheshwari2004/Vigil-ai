@@ -1,11 +1,14 @@
 from fastapi import FastAPI, HTTPException
-from sentence_transformers import SentenceTransformer
 from models import EmbedRequest, EmbedResponse, RAGRequest, RAGResponse
+from prometheus_fastapi_instrumentator import Instrumentator
+from sentence_transformers import SentenceTransformer
 import time
 
 app = FastAPI(title="Vigil-AI Inference Service", version="1.0.0")
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
+
+Instrumentator().instrument(app).expose(app)
 
 
 @app.get("/health")
