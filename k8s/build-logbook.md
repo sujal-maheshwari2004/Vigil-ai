@@ -520,3 +520,141 @@ At this stage:
 - ingress is configured
 
 Future days can append new sections below this point.
+
+## Day 3: Observability
+
+### Goal
+
+Add observability to both FastAPI services and stand up a basic monitoring stack with:
+
+- Prometheus scraping
+- Grafana dashboards
+- live visibility into latency, error rate, CPU, and requests per second
+
+### Instrumenting the Services
+
+### Changes Made
+
+Prometheus instrumentation was added to both services using `prometheus-fastapi-instrumentator`.
+
+### Files Updated
+
+- `gateway/pyproject.toml`
+- `inference_service/pyproject.toml`
+- `gateway/main.py`
+- `inference_service/main.py`
+
+### Why
+
+This exposed a `/metrics` endpoint on both FastAPI services so Prometheus could scrape request and process metrics.
+
+## Monitoring Stack Setup
+
+### Changes Made
+
+A local monitoring stack was added through Docker Compose:
+
+- Prometheus
+- Grafana
+
+### Files Created
+
+- `monitoring/prometheus.yml`
+- `monitoring/grafana/provisioning/datasources/prometheus.yml`
+- `monitoring/grafana/provisioning/dashboards/dashboards.yml`
+- `monitoring/grafana/dashboards/grafana-dashboard.json`
+
+### File Updated
+
+- `docker-compose.yml`
+
+### Why
+
+This allowed Day 3 observability to be validated locally before deciding whether to extend the same setup into Kubernetes.
+
+## Metrics Verification
+
+### Commands
+
+```powershell
+curl.exe http://localhost:8000/metrics
+curl.exe http://localhost:8001/metrics
+curl.exe http://localhost:9090/-/ready
+```
+
+### Why
+
+These commands checked:
+
+- the gateway metrics endpoint
+- the inference service metrics endpoint
+- Prometheus readiness
+
+### Result
+
+All three endpoints responded successfully.
+
+The `/metrics` output included:
+
+- Python process metrics
+- request counters
+- request duration histograms
+- handler-level request labels
+
+## Dashboard and Target Verification
+
+### Checks Performed
+
+- Prometheus targets page was checked and confirmed `UP`
+- Grafana was opened and confirmed to auto-load the provisioned dashboard
+
+### Result
+
+Both Prometheus and Grafana were functioning as expected.
+
+## Traffic Generation for Dashboard Validation
+
+### Command
+
+```powershell
+1..10 | ForEach-Object {
+  Invoke-RestMethod -Method POST `
+    -Uri "http://localhost:8000/query" `
+    -ContentType "application/json" `
+    -Body '{"text":"What is hypertension?","top_k":3}' | Out-Null
+}
+```
+
+### Why
+
+This generated enough application traffic for Prometheus to scrape useful request data and for the Grafana panels to visibly update.
+
+### Result
+
+After the looped requests:
+
+- latency showed live values
+- error rate remained visible
+- CPU usage showed activity
+- requests per second populated correctly
+
+## Day 3 Outcome
+
+Day 3 was completed successfully because:
+
+- both services exposed `/metrics`
+- Prometheus scraped both services successfully
+- Grafana auto-loaded the dashboard
+- dashboard panels populated with live data after traffic generation
+
+## Files Created or Updated During Day 3
+
+- `gateway/pyproject.toml`
+- `inference_service/pyproject.toml`
+- `gateway/main.py`
+- `inference_service/main.py`
+- `docker-compose.yml`
+- `monitoring/prometheus.yml`
+- `monitoring/grafana/provisioning/datasources/prometheus.yml`
+- `monitoring/grafana/provisioning/dashboards/dashboards.yml`
+- `monitoring/grafana/dashboards/grafana-dashboard.json`
