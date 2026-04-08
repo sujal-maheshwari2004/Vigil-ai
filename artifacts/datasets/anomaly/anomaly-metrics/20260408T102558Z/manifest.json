@@ -1,0 +1,23 @@
+{
+  "dataset_name": "anomaly-metrics",
+  "dataset_version": "20260408T102558Z",
+  "captured_at": "2026-04-08T10:25:58.076855+00:00",
+  "lookback_minutes": 15,
+  "step_seconds": 30,
+  "row_count": 31,
+  "feature_names": [
+    "latency_p95_ms",
+    "error_rate_pct",
+    "requests_per_second",
+    "cpu_pct",
+    "memory_mb"
+  ],
+  "prometheus_url": "http://prometheus:9090",
+  "queries": {
+    "latency_p95_ms": "histogram_quantile(0.95, sum(rate(http_request_duration_highr_seconds_bucket{job=~\"gateway|inference_service\",handler!=\"/metrics\"}[1m])) by (le)) * 1000",
+    "error_rate_pct": "(sum(rate(http_requests_total{job=~\"gateway|inference_service\",status=~\"5..\",handler!=\"/metrics\"}[1m])) / clamp_min(sum(rate(http_requests_total{job=~\"gateway|inference_service\",handler!=\"/metrics\"}[1m])), 0.0001)) * 100",
+    "requests_per_second": "sum(rate(http_requests_total{job=~\"gateway|inference_service\",handler!=\"/metrics\"}[1m]))",
+    "cpu_pct": "sum(rate(process_cpu_seconds_total{job=~\"gateway|inference_service\"}[1m])) * 100",
+    "memory_mb": "sum(avg_over_time(process_resident_memory_bytes{job=~\"gateway|inference_service\"}[1m])) / 1024 / 1024"
+  }
+}

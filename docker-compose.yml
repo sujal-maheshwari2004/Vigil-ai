@@ -57,6 +57,15 @@ services:
     environment:
       - PROMETHEUS_URL=http://prometheus:9090
       - ARTIFACTS_DIR=/artifacts
+      - RETRAIN_POLICY_ENABLED=true
+      - RETRAIN_INTERVAL_MINUTES=60
+      - RETRAIN_DATASET_NAME=anomaly-metrics
+      - RETRAIN_MODEL_NAME=isolation-forest
+      - RETRAIN_LOOKBACK_MINUTES=15
+      - RETRAIN_STEP_SECONDS=30
+      - DRIFT_POLICY_ENABLED=true
+      - DRIFT_INTERVAL_MINUTES=15
+      - DRIFT_THRESHOLD=0.35
     volumes:
       - ./artifacts:/artifacts
     depends_on:

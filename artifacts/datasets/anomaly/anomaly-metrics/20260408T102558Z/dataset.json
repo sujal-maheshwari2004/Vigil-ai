@@ -1,0 +1,250 @@
+[
+  {
+    "timestamp": "2026-04-08T10:11:00+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.036366281184086115,
+    "cpu_pct": 0.34548264694234154,
+    "memory_mb": 500.2421875
+  },
+  {
+    "timestamp": "2026-04-08T10:11:30+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636694244931358,
+    "cpu_pct": 0.3272965307649875,
+    "memory_mb": 500.2421875
+  },
+  {
+    "timestamp": "2026-04-08T10:12:00+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636561994290598,
+    "cpu_pct": 0.34547008337193524,
+    "memory_mb": 500.2421875
+  },
+  {
+    "timestamp": "2026-04-08T10:12:30+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636561994290598,
+    "cpu_pct": 0.32728760400905055,
+    "memory_mb": 500.2421875
+  },
+  {
+    "timestamp": "2026-04-08T10:13:00+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.036366281184086115,
+    "cpu_pct": 0.34547669566350736,
+    "memory_mb": 500.2421875
+  },
+  {
+    "timestamp": "2026-04-08T10:13:30+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.019397197446357373,
+    "cpu_pct": 0.30064446491293956,
+    "memory_mb": 500.2421875
+  },
+  {
+    "timestamp": "2026-04-08T10:14:00+00:00",
+    "latency_p95_ms": 19.750006818615727,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.01818280997145299,
+    "cpu_pct": 21.055755442372316,
+    "memory_mb": 499.28559027777777
+  },
+  {
+    "timestamp": "2026-04-08T10:14:30+00:00",
+    "latency_p95_ms": 17.551447582087757,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.017642224428081575,
+    "cpu_pct": 0.30942252485387417,
+    "memory_mb": 498.55078125
+  },
+  {
+    "timestamp": "2026-04-08T10:15:00+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636628118408612,
+    "cpu_pct": 0.3272935550714639,
+    "memory_mb": 498.55078125
+  },
+  {
+    "timestamp": "2026-04-08T10:15:30+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636561994290598,
+    "cpu_pct": 0.2909249595432477,
+    "memory_mb": 498.55078125
+  },
+  {
+    "timestamp": "2026-04-08T10:16:00+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636561994290598,
+    "cpu_pct": 0.34547338945760586,
+    "memory_mb": 498.55078125
+  },
+  {
+    "timestamp": "2026-04-08T10:16:30+00:00",
+    "latency_p95_ms": 9.499999999999998,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.036366281184086115,
+    "cpu_pct": 0.34547967124881723,
+    "memory_mb": 498.55078125
+  },
+  {
+    "timestamp": "2026-04-08T10:17:00+00:00",
+    "latency_p95_ms": 9.499999999999998,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.036366281184086115,
+    "cpu_pct": 0.3272965306567745,
+    "memory_mb": 498.55078125
+  },
+  {
+    "timestamp": "2026-04-08T10:17:30+00:00",
+    "latency_p95_ms": 9.499999999999998,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636628118408612,
+    "cpu_pct": 0.3272965306567786,
+    "memory_mb": 498.55078125
+  },
+  {
+    "timestamp": "2026-04-08T10:18:00+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636760373858967,
+    "cpu_pct": 0.34549223551660413,
+    "memory_mb": 498.55078125
+  },
+  {
+    "timestamp": "2026-04-08T10:18:30+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636892638929299,
+    "cpu_pct": 0.34550149401139685,
+    "memory_mb": 498.55078125
+  },
+  {
+    "timestamp": "2026-04-08T10:19:00+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.0363682650519157,
+    "cpu_pct": 0.3454919049801884,
+    "memory_mb": 498.55078125
+  },
+  {
+    "timestamp": "2026-04-08T10:19:30+00:00",
+    "latency_p95_ms": 39.37498295284071,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636760373858967,
+    "cpu_pct": 21.62048222913526,
+    "memory_mb": 499.0208333333333
+  },
+  {
+    "timestamp": "2026-04-08T10:20:00+00:00",
+    "latency_p95_ms": 35.2865146350898,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.0176522261977959,
+    "cpu_pct": 0.2738769946249498,
+    "memory_mb": 499.8203125
+  },
+  {
+    "timestamp": "2026-04-08T10:20:30+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.0363682650519157,
+    "cpu_pct": 0.36367934395252594,
+    "memory_mb": 499.8203125
+  },
+  {
+    "timestamp": "2026-04-08T10:21:00+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636760373858967,
+    "cpu_pct": 0.32730843364730977,
+    "memory_mb": 499.8203125
+  },
+  {
+    "timestamp": "2026-04-08T10:21:30+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636694244931357,
+    "cpu_pct": 0.30911901081916526,
+    "memory_mb": 499.8203125
+  },
+  {
+    "timestamp": "2026-04-08T10:22:00+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636760373858967,
+    "cpu_pct": 0.32730545784556775,
+    "memory_mb": 499.8203125
+  },
+  {
+    "timestamp": "2026-04-08T10:22:30+00:00",
+    "latency_p95_ms": 9.500000000000002,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636694244931358,
+    "cpu_pct": 0.3273054578455677,
+    "memory_mb": 499.8203125
+  },
+  {
+    "timestamp": "2026-04-08T10:23:00+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636760373858967,
+    "cpu_pct": 0.32730545784556486,
+    "memory_mb": 499.8203125
+  },
+  {
+    "timestamp": "2026-04-08T10:23:30+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.036368265051915705,
+    "cpu_pct": 0.34549554208323113,
+    "memory_mb": 499.8203125
+  },
+  {
+    "timestamp": "2026-04-08T10:24:00+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636760373858967,
+    "cpu_pct": 0.36367273093951497,
+    "memory_mb": 499.8203125
+  },
+  {
+    "timestamp": "2026-04-08T10:24:30+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636694244931358,
+    "cpu_pct": 0.36366942449313533,
+    "memory_mb": 499.8203125
+  },
+  {
+    "timestamp": "2026-04-08T10:25:00+00:00",
+    "latency_p95_ms": 9.5,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.03636760373858967,
+    "cpu_pct": 0.3273084336473065,
+    "memory_mb": 499.8203125
+  },
+  {
+    "timestamp": "2026-04-08T10:25:30+00:00",
+    "latency_p95_ms": 12.820076110126871,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.036366281184086115,
+    "cpu_pct": 18.09534068087849,
+    "memory_mb": 499.89496527777777
+  },
+  {
+    "timestamp": "2026-04-08T10:26:00+00:00",
+    "latency_p95_ms": 31.249999999999964,
+    "error_rate_pct": 0.0,
+    "requests_per_second": 0.036366281184086115,
+    "cpu_pct": 21.34700705505855,
+    "memory_mb": 500.0427517361111
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "model_name": "isolation-forest",
+  "model_version": "20260408T101936Z",
+  "dataset_name": "anomaly-metrics",
+  "dataset_version": "20260408T101935Z",
+  "feature_names": [
+    "latency_p95_ms",
+    "error_rate_pct",
+    "requests_per_second",
+    "cpu_pct",
+    "memory_mb"
+  ],
+  "contamination": 0.06451612903225806,
+  "training_samples": 31,
+  "trained_at": "2026-04-08T10:19:36.232278+00:00"
+}

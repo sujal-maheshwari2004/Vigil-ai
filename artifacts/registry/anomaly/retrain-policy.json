@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "interval_minutes": 60,
+  "last_run_at": "2026-04-08T10:25:58.032773+00:00",
+  "last_status": "success",
+  "last_note": "manual retraining completed successfully",
+  "last_dataset_version": "20260408T102558Z",
+  "last_model_version": "20260408T102558Z",
+  "run_count": 5,
+  "last_trigger": "manual",
+  "last_drift_score": 0.0037,
+  "last_drift_detected": false
+}

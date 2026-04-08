@@ -817,3 +817,102 @@ The detector was refactored so scoring depends on the artifact registry instead 
 ### Result
 
 The repo is ready for runtime verification of versioned model training and registry-backed anomaly scoring.
+
+## Next MLOps Task Completed: Time-Based Retraining
+
+### Changes Made
+
+Time-based retraining support was added to the trainer service.
+
+### Files Updated
+
+- `anomaly_trainer/models.py`
+- `anomaly_trainer/main.py`
+- `docker-compose.yml`
+
+### What the Retraining Layer Does
+
+The trainer now supports:
+
+- a manual retraining endpoint
+- a background scheduled retraining loop
+- persisted retraining policy metadata
+- Prometheus metrics for retraining status
+
+### New Retraining Endpoints
+
+- `POST /retrain/run`
+- `GET /retrain/status`
+
+### Policy Metadata
+
+Retraining status is persisted under the artifact registry area so the state survives container restarts more cleanly than in-memory scheduler state alone.
+
+The policy now tracks:
+
+- whether retraining is enabled
+- interval in minutes
+- last run time
+- last run status
+- last note
+- last dataset version
+- last model version
+
+### Compose Configuration Added
+
+The trainer now accepts environment-driven policy settings such as:
+
+- retraining enabled/disabled
+- retraining interval
+- default dataset and model names
+- default lookback and step values
+
+### Result
+
+The repo now has a rudimentary but real time-based retraining loop, which is a meaningful MLOps improvement over one-off manual retraining.
+
+## Next MLOps Task Completed: Drift-Triggered Retraining
+
+### Changes Made
+
+The trainer now supports evaluating drift and triggering retraining when the drift score crosses a configurable threshold.
+
+### Files Updated
+
+- `anomaly_trainer/models.py`
+- `anomaly_trainer/main.py`
+- `docker-compose.yml`
+
+### What the Drift Layer Does
+
+The trainer can now:
+
+- compare current Prometheus-derived feature means against the baseline dataset used by the latest promoted model
+- compute a normalized drift score across the anomaly features
+- persist the last drift score and detection result into retraining policy metadata
+- trigger a retraining cycle automatically when drift exceeds the configured threshold
+
+### New Drift Endpoint
+
+- `POST /retrain/drift-check`
+
+### Drift Policy Configuration
+
+The trainer now accepts drift policy environment settings for:
+
+- drift enabled/disabled
+- drift check interval
+- drift threshold
+
+### Additional Fix Applied
+
+Retraining policy notes were corrected so manual runs no longer report themselves as scheduled runs.
+
+### Result
+
+The project now supports both:
+
+- time-based retraining
+- drift-triggered retraining
+
+which gives Day 4 a more credible MLOps control loop.
