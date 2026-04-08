@@ -21,3 +21,27 @@ spec:
     - port: 8000
       targetPort: 8000
   type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: anomaly-detector
+spec:
+  selector:
+    app: anomaly-detector
+  ports:
+    - port: 8002
+      targetPort: 8002
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: anomaly-trainer
+spec:
+  selector:
+    app: anomaly-trainer
+  ports:
+    - port: 8003
+      targetPort: 8003
+  type: ClusterIP

@@ -1,3 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: anomaly-artifacts-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -86,3 +97,127 @@ spec:
               port: 8000
             initialDelaySeconds: 15
             periodSeconds: 20
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anomaly-detector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anomaly-detector
+  template:
+    metadata:
+      labels:
+        app: anomaly-detector
+    spec:
+      containers:
+        - name: anomaly-detector
+          image: vigil-anomaly-detector:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8002
+          env:
+            - name: PROMETHEUS_URL
+              value: http://prometheus:9090
+            - name: ANOMALY_THRESHOLD
+              value: "0.8"
+            - name: ARTIFACTS_DIR
+              value: /artifacts
+          volumeMounts:
+            - name: anomaly-artifacts
+              mountPath: /artifacts
+          resources:
+            requests:
+              cpu: "150m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8002
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8002
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      volumes:
+        - name: anomaly-artifacts
+          persistentVolumeClaim:
+            claimName: anomaly-artifacts-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anomaly-trainer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anomaly-trainer
+  template:
+    metadata:
+      labels:
+        app: anomaly-trainer
+    spec:
+      containers:
+        - name: anomaly-trainer
+          image: vigil-anomaly-trainer:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8003
+          env:
+            - name: PROMETHEUS_URL
+              value: http://prometheus:9090
+            - name: ARTIFACTS_DIR
+              value: /artifacts
+            - name: RETRAIN_POLICY_ENABLED
+              value: "true"
+            - name: RETRAIN_INTERVAL_MINUTES
+              value: "60"
+            - name: RETRAIN_DATASET_NAME
+              value: anomaly-metrics
+            - name: RETRAIN_MODEL_NAME
+              value: isolation-forest
+            - name: RETRAIN_LOOKBACK_MINUTES
+              value: "15"
+            - name: RETRAIN_STEP_SECONDS
+              value: "30"
+            - name: DRIFT_POLICY_ENABLED
+              value: "true"
+            - name: DRIFT_INTERVAL_MINUTES
+              value: "15"
+            - name: DRIFT_THRESHOLD
+              value: "0.35"
+          volumeMounts:
+            - name: anomaly-artifacts
+              mountPath: /artifacts
+          resources:
+            requests:
+              cpu: "150m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8003
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8003
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      volumes:
+        - name: anomaly-artifacts
+          persistentVolumeClaim:
+            claimName: anomaly-artifacts-pvc

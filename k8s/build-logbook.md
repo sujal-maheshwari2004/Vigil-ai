@@ -916,3 +916,27 @@ The project now supports both:
 - drift-triggered retraining
 
 which gives Day 4 a more credible MLOps control loop.
+
+## Kubernetes Expansion for Anomaly and MLOps Services
+
+### Changes Made
+
+The Kubernetes manifests were extended so the anomaly and trainer services are no longer limited to Docker Compose validation.
+
+### Files Updated
+
+- `k8s/deployment.yaml`
+- `k8s/service.yaml`
+- `k8s/hpa.yaml`
+
+### What Was Added
+
+- Deployment for `anomaly-detector`
+- Deployment for `anomaly-trainer`
+- ClusterIP Service for both new services
+- HPA resources for both new services
+- shared PVC for the artifacts directory used by model and dataset registry files
+
+### Note
+
+Ingress was intentionally left unchanged because only the gateway needs public routing for the current architecture.
